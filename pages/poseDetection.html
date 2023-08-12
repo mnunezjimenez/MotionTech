@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="../styles/pose.css">
+	<!-- Include below scripts if you want to use TF.js runtime. -->
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection"></script>
+
+
+</head>
+
+<body>
+
+	<!-- Webcam video snapshot -->
+	<div class="top-Container" id="topContainer">
+		<video id="video" playsinline autoplay class="el-webcam"></video>
+		<canvas id="skeleton" class="skeleton-webcam"></canvas>
+		<canvas id="fpscanvas" style="display: none;"></canvas>
+	</div>
+
+
+
+
+	<script>
+		'use strict';
+
+		const exercise = {
+			ex: 'bicepsCurls', exData:
+				[
+					{
+						keypoints: [12, 14, 16],
+						reachValues: [80, 160, 80],
+						name: 'rightBicep'
+					},
+					{
+						keypoints: [11, 13, 15],
+						reachValues: [70, 150, 70],
+						name: 'leftBicep'
+					}
+				],
+			exStep: -1,
+			totalSteps:3
+		};
+
+		async function captureFrame() {
+			/* Get poses and skeleton image*/
+			const frameImg = getFpsImage();
+			let poses = await detector.estimatePoses(frameImg);
+			poses = poses[0];
+			drawSkeleton(poses);
+
+			/*Process exercises */
+			const doneCorrectly = exerciseDetect(poses, exercise);
+			console.log(exercise.exStep)
+			console.log('el otro ',exerciseStep)
+			console.log(doneCorrectly)
+			if (!(doneCorrectly.includes(false)) ) {
+				if(exerciseStep != exercise.exStep){
+					//exerciseStep++;
+				}
+
+			}
+
+
+			//return before 5 seconds l
+			let startTest = false;
+			if (!startTest) {
+				return;
+			}
+
+
+
+		}
+
+
+	</script>
+	<script src="../scripts/model.js"></script>
+	<script src="../scripts/loadwebcam.js"></script>
+	<script src="../scripts/intervals.js"></script>
+	<script src="../scripts/constantsandvars.js"></script>
+	<script src="../scripts/skeletonWebcam.js"></script>
+	<script src="../scripts/exerciseDetection.js"></script>
+</body>
+
+</html>
