@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="../styles/pose.css">
+	<!-- Include below scripts if you want to use TF.js runtime. -->
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection"></script>
+
+
+</head>
+
+<body>
+
+	<!-- Webcam video snapshot -->
+	<div>
+		<iframe src="http://127.0.0.1:5500/pages/poseDetection.html" id="poseDetectionIframe"></iframe>
+	</div>
+
+	<script>
+		var exercise = {
+			ex: 'bicepsCurls', exData:
+				[
+					{
+						keypoints: [12, 14, 16],
+						reachValues: [80, 160, 80],
+						name: 'rightBicep'
+					},
+					{
+						keypoints: [11, 13, 15],
+						reachValues: [70, 150, 70],
+						name: 'leftBicep'
+					}
+				],
+			exStep: -1,
+			totalSteps: 2
+		};
+
+		const poseDetectionIframe = document.getElementById('poseDetectionIframe');
+		poseDetectionIframe.contentWindow.postMessage({ exercise: exercise }, '*');
+		console.log('iframe ', poseDetectionIframe)
+
+
+		//recibe 
+		window.addEventListener('message', function (event) {
+			if (event.data.angle || event.data.rep) {
+				console.log(event.data)
+			}
+		});
+
+	</script>
+
+</body>
+
+</html>

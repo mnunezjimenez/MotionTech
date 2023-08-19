@@ -23,13 +23,10 @@
 		<canvas id="fpscanvas" style="display: none;"></canvas>
 	</div>
 
-
-
-
 	<script>
 		'use strict';
 
-		const exercise = {
+		var exercise = {
 			ex: 'bicepsCurls', exData:
 				[
 					{
@@ -44,47 +41,61 @@
 					}
 				],
 			exStep: -1,
-			totalSteps:3
+			totalSteps: 2
 		};
 
 		async function captureFrame() {
-			/* Get poses and skeleton image*/
+			
+			/* return in case exercise does not exist */
+			if (!exercise) return;
+
+			/* Get poses and skeleton image */
 			const frameImg = getFpsImage();
 			let poses = await detector.estimatePoses(frameImg);
 			poses = poses[0];
 			drawSkeleton(poses);
 
-			/*Process exercises */
-			const doneCorrectly = exerciseDetect(poses, exercise);
-			console.log(exercise.exStep)
-			console.log('el otro ',exerciseStep)
-			console.log(doneCorrectly)
-			if (!(doneCorrectly.includes(false)) ) {
-				if(exerciseStep != exercise.exStep){
-					//exerciseStep++;
-				}
+			/* Restart steps for the exercise */
+			if (exerciseStep > exercise?.totalSteps) {
+				exercise.exStep = -1;
+				exerciseStep = 0;
+				repCount++;
+				sendReps(repCount);
+			}
 
+			/* Process exercises steps, angles etc. */
+			const doneCorrectly = exerciseDetect(poses, exercise);
+			/*
+				exercise?.exStep = 0 ;  exerciseStep= 1 -> detects step 1 [x,1,x]
+				exercise?.exStep = 1 ;  exerciseStep= 2 -> detects step 2 [x,x,2]
+			*/
+			if (!(doneCorrectly.includes(false))) {
+				exercise.exStep = exerciseStep;
+				exerciseStep++;
 			}
 
 
-			//return before 5 seconds l
-			let startTest = false;
+			//return before 5 seconds 
 			if (!startTest) {
 				return;
 			}
-
-
 
 		}
 
 
 	</script>
-	<script src="../scripts/model.js"></script>
-	<script src="../scripts/loadwebcam.js"></script>
-	<script src="../scripts/intervals.js"></script>
-	<script src="../scripts/constantsandvars.js"></script>
-	<script src="../scripts/skeletonWebcam.js"></script>
-	<script src="../scripts/exerciseDetection.js"></script>
+
+
+	<script src="../scripts/IframeMsgs/send.js"></script>
+	<script src="../scripts/IframeMsgs/recieve.js"></script>
+	<script src="../scripts/poseDetectionJs/model.js"></script>
+	<script src="../scripts/poseDetectionJs/loadwebcam.js"></script>
+	<script src="../scripts/poseDetectionJs/constantsandvars.js"></script>
+	<script src="../scripts/poseDetectionJs/skeletonWebcam.js"></script>
+	<script src="../scripts/poseDetectionJs/exerciseDetection.js"></script>
+	<script src="../scripts/poseDetectionJs/intervals.js"></script>
+	<script src="../scripts/poseDetectionJs/testStatus.js"></script>
+
 </body>
 
 </html>

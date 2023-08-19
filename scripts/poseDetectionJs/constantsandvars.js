@@ -3,6 +3,9 @@ const canvas = document.getElementById('fpscanvas');
 const skeletonCanvas = document.getElementById('skeleton');
 
 var exerciseStep = 0;
+var repCount = 0;
+var startTest = false;
+
 const BLAZEPOSE_CONNECTED_KEYPOINTS_PAIRS = [
   [0, 1],
   [0, 4],
