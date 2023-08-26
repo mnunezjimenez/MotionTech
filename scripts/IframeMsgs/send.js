@@ -11,5 +11,3 @@ function sendData() {
 	if (window && window.parent) { window.parent.postMessage('jdeijdoejd', '*'); };
 
 }
-
-sendData();

@@ -26,34 +26,17 @@
 	<script>
 		'use strict';
 
-		var exercise = {
-			ex: 'bicepsCurls', exData:
-				[
-					{
-						keypoints: [12, 14, 16],
-						reachValues: [80, 160, 80],
-						name: 'rightBicep'
-					},
-					{
-						keypoints: [11, 13, 15],
-						reachValues: [70, 150, 70],
-						name: 'leftBicep'
-					}
-				],
-			exStep: -1,
-			totalSteps: 2
-		};
-
+		var exercise;
 		async function captureFrame() {
-			
-			/* return in case exercise does not exist */
-			if (!exercise) return;
 
 			/* Get poses and skeleton image */
 			const frameImg = getFpsImage();
 			let poses = await detector.estimatePoses(frameImg);
 			poses = poses[0];
 			drawSkeleton(poses);
+
+			/* return in case exercise does not exist */
+			if (!exercise) return;
 
 			/* Restart steps for the exercise */
 			if (exerciseStep > exercise?.totalSteps) {

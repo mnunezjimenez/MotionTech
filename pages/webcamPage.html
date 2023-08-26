@@ -18,7 +18,11 @@
 
 	<!-- Webcam video snapshot -->
 	<div>
-		<iframe src="http://127.0.0.1:5500/pages/poseDetection.html" id="poseDetectionIframe"></iframe>
+		<iframe src="http://127.0.0.1:5500/pages/poseDetection.html" id="poseDetectionIframe" height="650px"
+			width="900px"></iframe>
+			<button style="width: 500; height: 500;" id="sendExercise">Send Exercise</button>
+			<button style="width: 500; height: 500;" id="startExercise">Start Exercise</button>
+			<button style="width: 500; height: 500;" id="restartExercise">Restart Exercise</button>
 	</div>
 
 	<script>
@@ -42,14 +46,26 @@
 
 		const poseDetectionIframe = document.getElementById('poseDetectionIframe');
 		poseDetectionIframe.contentWindow.postMessage({ exercise: exercise }, '*');
-		console.log('iframe ', poseDetectionIframe)
 
 
 		//recibe 
 		window.addEventListener('message', function (event) {
 			if (event.data.angle || event.data.rep) {
-				console.log(event.data)
+				//hay reps o angles enviados para procesar aqui
+				//console.log(event.data)
 			}
+		});
+
+		document.getElementById('sendExercise').addEventListener('click', function (event) {
+			poseDetectionIframe.contentWindow.postMessage({ exercise: exercise }, '*');
+		});
+
+		document.getElementById('startExercise').addEventListener('click', function (event) {
+			poseDetectionIframe.contentWindow.postMessage({ startTest: true }, '*');
+		});
+
+		document.getElementById('restartExercise').addEventListener('click', function (event) {
+			poseDetectionIframe.contentWindow.postMessage({ restart: true }, '*');
 		});
 
 	</script>

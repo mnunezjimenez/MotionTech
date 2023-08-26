@@ -3,4 +3,5 @@ setInterval(function () {
 	if (detector) {
 		captureFrame();
 	}
-}, 70);
+}, 100);
+//set to 65 ms
