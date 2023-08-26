@@ -51,11 +51,16 @@
 		//recibe 
 		window.addEventListener('message', function (event) {
 			if (event.data.angle || event.data.rep) {
-				//hay reps o angles enviados para procesar aqui
-				//console.log(event.data)
+				//angle -> {angle: 110, jointName: 'leftBicep'}
+				//rep -> {rep:num} o  {rep: 1}
+				if(event.data.rep){
+					console.log(event.data)
+				}
+				
 			}
 		});
 
+		//me tienes que mandar el json con la forma del ejercicio 
 		document.getElementById('sendExercise').addEventListener('click', function (event) {
 			poseDetectionIframe.contentWindow.postMessage({ exercise: exercise }, '*');
 		});
