@@ -22,52 +22,6 @@
 		<canvas id="fpscanvas" style="display: none;"></canvas>
 	</div>
 
-	<script>
-		'use strict';
-
-		var exercise;
-		async function captureFrame() {
-
-			/* Get poses and skeleton image */
-			const frameImg = getFpsImage();
-			let poses = await detector.estimatePoses(frameImg);
-			poses = poses[0];
-			drawSkeleton(poses);
-
-			/* return in case exercise does not exist */
-			if (!exercise) return;
-
-			/* Restart steps for the exercise */
-			if (exerciseStep > exercise?.totalSteps) {
-				exercise.exStep = -1;
-				exerciseStep = 0;
-				repCount++;
-				sendReps(repCount);
-			}
-
-			/* Process exercises steps, angles etc. */
-			const doneCorrectly = exerciseDetect(poses, exercise);
-			/*
-				exercise?.exStep = 0 ;  exerciseStep= 1 -> detects step 1 [x,1,x]
-				exercise?.exStep = 1 ;  exerciseStep= 2 -> detects step 2 [x,x,2]
-			*/
-			if (!(doneCorrectly.includes(false))) {
-				exercise.exStep = exerciseStep;
-				exerciseStep++;
-			}
-
-
-			//return before 5 seconds 
-			if (!startTest) {
-				return;
-			}
-
-		}
-
-
-	</script>
-
-
 	<script src="../scripts/IframeMsgs/send.js"></script>
 	<script src="../scripts/IframeMsgs/recieve.js"></script>
 	<script src="../scripts/poseDetectionJs/model.js"></script>

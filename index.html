@@ -9,10 +9,10 @@
     <link rel="stylesheet" href="./styles/pose.css">
     <script src="https://kit.fontawesome.com/a69046671c.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection"></script>
     <title>Motion Tech</title>
 </head>
 
@@ -76,24 +76,46 @@
                     <div id="start" class="button">
                         Start
                     </div>
+                    <div id="restart" class="button">
+                        Restart
+                    </div>
                 </div>
                 <div class="col-60">
                     <div class="exercise_description">
-                        Reps: <span id="reps">1</span>
+                        Reps: <p id="reps">0</p>
                     </div>
                 </div>
-                
-            </div>
 
+            </div>
+            <select id="exerciseChoose" style="width: 200px;">
+                <option value="biceps">Biceps Curl</option>
+                <option value="squats">Squats</option>
+            </select>
         </div>
     </div>
 </body>
 <script>
     'use strict';
 
-    var exercise;
-    async function captureFrame() {
+    var exercise = {
+        ex: 'bicepsCurls', exData:
+            [
+                {
+                    keypoints: [12, 14, 16],
+                    reachValues: [80, 160, 80],
+                    name: 'rightBicep'
+                },
+                {
+                    keypoints: [11, 13, 15],
+                    reachValues: [70, 150, 70],
+                    name: 'leftBicep'
+                }
+            ],
+        exStep: -1,
+        totalSteps: 2
+    };
 
+    async function captureFrame() {
         /* Get poses and skeleton image */
         const frameImg = getFpsImage();
         let poses = await detector.estimatePoses(frameImg);
@@ -108,8 +130,7 @@
             exercise.exStep = -1;
             exerciseStep = 0;
             repCount++;
-            document.getElementById('reps').innerHTML(repCount);
-            sendReps(repCount);
+            document.getElementById('reps').innerText = repCount;
         }
 
         /* Process exercises steps, angles etc. */
@@ -130,7 +151,67 @@
         }
 
     }
-    
+
+    function showAngles(angle, name) {
+        //aqui en un document.getid(id), muestro el id y el anguolo, es dinamico 
+    }
+
+    document.getElementById("start").addEventListener("click", function () {
+        startTest = true;
+    });
+
+    document.getElementById("restart").addEventListener("click", function () {
+            //window.location.reload();
+            exerciseStep = 0;
+            repCount = 0;
+            startTest = false;
+            exercise.exStep = -1;
+            document.getElementById('reps').innerText = 0;
+        });
+
+    document.getElementById("exerciseChoose").addEventListener("change", function (event) {
+        if (document.getElementById('exerciseChoose').value === 'biceps') {
+            exercise = {
+                ex: 'bicepsCurls', exData:
+                    [
+                        {
+                            keypoints: [12, 14, 16],
+                            reachValues: [150, 80, 150],
+                            name: 'Right Bicep'
+                        },
+                        {
+                            keypoints: [11, 13, 15],
+                            reachValues: [150, 80, 150],
+                            name: 'Left Bicep'
+                        }
+                    ],
+                exStep: -1,
+                totalSteps: 2
+            };
+        }
+        else if (document.getElementById('exerciseChoose').value === 'squats') {
+            exercise = {
+                ex: 'squats', exData:
+                    [
+                        {
+                            keypoints: [24, 26, 28],
+                            reachValues: [150, 80, 150],
+                            name: 'Right Leg'
+                        },
+                        {
+                            keypoints: [23, 25, 27],
+                            reachValues: [150, 80, 150],
+                            name: 'Left Leg '
+                        }
+                    ],
+                exStep: -1,
+                totalSteps: 2
+            };
+        }
+    });
+
+
+
 
 </script>
 <script src="./scripts/IframeMsgs/send.js"></script>
@@ -142,4 +223,5 @@
 <script src="./scripts/poseDetectionJs/exerciseDetection.js"></script>
 <script src="./scripts/poseDetectionJs/intervals.js"></script>
 <script src="./scripts/poseDetectionJs/testStatus.js"></script>
+
 </html>

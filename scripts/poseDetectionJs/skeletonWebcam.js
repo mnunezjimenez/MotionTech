@@ -29,7 +29,7 @@ function drawSkeleton(results){
 			const y = keypoint.y;
 			if (j.score > 0.7) {
 				ctx.beginPath();
-				ctx.arc(x, y, 8, 0, 2 * Math.PI);
+				ctx.arc(x, y, 2, 0, 2 * Math.PI);
 				ctx.strokeStyle = "white";
 				ctx.lineWidth = 10;
 				ctx.stroke();
@@ -49,7 +49,7 @@ function drawSkeleton(results){
 			ctx.beginPath();
 			ctx.moveTo(poseEsqueleto[keypoints[0]].x * 1, poseEsqueleto[keypoints[0]].y * 1);
 			ctx.lineTo(poseEsqueleto[keypoints[1]].x * 1, poseEsqueleto[keypoints[1]].y * 1);
-			ctx.lineWidth = 3.5;
+			ctx.lineWidth = 4;
 			ctx.strokeStyle = "white";
 			ctx.stroke();
 		}
@@ -64,7 +64,7 @@ function drawSkeleton(results){
 			const y = keypoint.y;
 			if (j.score > 0.7) {
 				ctx.beginPath();
-				ctx.arc(x, y, 10, 0, 2 * Math.PI);
+				ctx.arc(x, y, 4, 0, 2 * Math.PI);
 				ctx.fillStyle = "black";
 				ctx.fill();
 			}
