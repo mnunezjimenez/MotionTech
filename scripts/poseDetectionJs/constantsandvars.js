@@ -6,6 +6,11 @@ var exerciseStep = 0;
 var repCount = 0;
 var startTest = false;
 
+var audio = document.createElement("AUDIO")
+document.body.appendChild(audio);
+audio.src = "https://docs.google.com/uc?export=open&id=1YvfaQHakoPN-mT34EmFvkQO3NQzwvDxR";
+
+
 const BLAZEPOSE_CONNECTED_KEYPOINTS_PAIRS = [
   [0, 1],
   [0, 4],

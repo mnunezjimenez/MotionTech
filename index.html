@@ -102,12 +102,12 @@
             [
                 {
                     keypoints: [12, 14, 16],
-                    reachValues: [80, 160, 80],
+                    reachValues: [130, 75, 130],
                     name: 'rightBicep'
                 },
                 {
                     keypoints: [11, 13, 15],
-                    reachValues: [70, 150, 70],
+                    reachValues: [130, 75, 130],
                     name: 'leftBicep'
                 }
             ],
@@ -131,6 +131,7 @@
             exerciseStep = 0;
             repCount++;
             document.getElementById('reps').innerText = repCount;
+            audio.play()
         }
 
         /* Process exercises steps, angles etc. */
@@ -176,12 +177,12 @@
                     [
                         {
                             keypoints: [12, 14, 16],
-                            reachValues: [150, 80, 150],
+                            reachValues: [130, 85, 130],
                             name: 'Right Bicep'
                         },
                         {
                             keypoints: [11, 13, 15],
-                            reachValues: [150, 80, 150],
+                            reachValues: [130, 85, 130],
                             name: 'Left Bicep'
                         }
                     ],
@@ -195,12 +196,12 @@
                     [
                         {
                             keypoints: [24, 26, 28],
-                            reachValues: [150, 80, 150],
+                            reachValues: [135, 80, 135],
                             name: 'Right Leg'
                         },
                         {
                             keypoints: [23, 25, 27],
-                            reachValues: [150, 80, 150],
+                            reachValues: [135, 80, 135],
                             name: 'Left Leg '
                         }
                     ],

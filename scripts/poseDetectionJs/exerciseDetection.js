@@ -6,8 +6,8 @@ function exerciseDetect(poses, exercise) {
 	jointData.map((joint, idx) => {
 		let angle = getAngle(poses[joint.keypoints[0]], poses[joint.keypoints[1]], poses[joint.keypoints[2]]);
 		showAngles(angle, joint.name)
-		if (angle <= jointData[idx].reachValues[exerciseStep] + 10
-			&& angle >= jointData[idx].reachValues[exerciseStep] - 10 && exerciseStep != exercise.exStep) {
+		if (angle <= jointData[idx].reachValues[exerciseStep] + 20
+			&& angle >= jointData[idx].reachValues[exerciseStep] - 20 && exerciseStep != exercise.exStep) {
 			stepDone.push(true);
 		}
 		else {
