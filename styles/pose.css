@@ -23,9 +23,9 @@ body {
 	text-align: center;
 	z-index: 2;
 	pointer-events: none;
-	width: 50%;
+	width: 100%;
 	height: auto;
-	padding: 11px;
+  box-sizing: border-box;
 }
 
 

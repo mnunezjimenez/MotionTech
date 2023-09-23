@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/app_styles.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>Sign up</title>
+</head>
+
+<body>
+    <div class="navbar">
+        <div id="home" class="logo">
+            MOTION TECH
+        </div>
+        <div class="nav_action_description">
+            ¿Already have an account?
+        </div>
+        <div id="login" class="nav_button">
+            Log in
+        </div>
+    </div>
+    <div id="auth_container" class="main_container">
+        <div class="form_card">
+            <div class="form_card_description">
+                Sign up with your email
+            </div>
+            <div class="label">
+                Email
+            </div>
+            <div class="form_input">
+                <input type="email" name="email" id="email">
+            </div>
+            <div class="label">
+                Password
+            </div>
+            <div class="form_input">
+                <input type="password" name="password" id="password">
+            </div>
+            <div class="label">
+                Confirm password
+            </div>
+            <div class="form_input">
+                <input type="password" name="password_confirm" id="password_confirm">
+            </div>
+            <div id="signup" class="button primary">
+                Sign up
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    $(document).ready(() => {
+        $("#login").on('click', (e) => {
+            window.location.href = "./signin.html"
+        });
+
+        $("#home").on('click', (e) => {
+            window.location.href = "../index.html"
+        });
+
+        $("#signup").on('click', (e) => {
+            if(!validPassword()){
+                return; //Show message saying passwords are different
+            }
+            const params = new URLSearchParams();
+            params.append('email', $("#email").val());
+            params.append('password', $("#password").val());
+            axios.post('http://localhost:8080/User/',params)
+                .then(() => {
+                    window.location.href = "./webcam.html"
+                })
+                .catch(()=>console.log('failed'));
+        });
+    });
+
+    const validPassword = () => {
+        if($("#password").val() !== $("#password_confirm").val() || $("#password").val() === ""){
+            return false;
+        }
+        return true;
+    }
+</script>
+
+</html>

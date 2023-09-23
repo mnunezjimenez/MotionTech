@@ -5,224 +5,66 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles/styles.css">
-    <link rel="stylesheet" href="./styles/pose.css">
-    <script src="https://kit.fontawesome.com/a69046671c.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection"></script>
+    <link rel="stylesheet" href="./styles/app_styles.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <title>Motion Tech</title>
 </head>
 
 <body>
-    <div class="main_container">
-        <div class="menu_container">
-            <div class="logo_container">
-                <i class="fa-solid fa-m"></i>
-                Motion Tech
-            </div>
-            <div class="menu_items_container">
-                <div class="menu_item active">
-                    Tracking
-                    <i class="fa-solid fa-robot"></i>
-                </div>
-                <div class="menu_item">
-                    Profile
-                    <i class="fa-solid fa-user"></i>
-                </div>
-                <div class="menu_item">
-                    Exercises
-                    <i class="fa-solid fa-dumbbell"></i>
-                </div>
-                <div class="menu_item">
-                    Calendar
-                    <i class="fa-solid fa-calendar"></i>
-                </div>
-                <div class="menu_item">
-                    Nutrition
-                    <i class="fa-solid fa-carrot"></i>
-                </div>
-                <div class="menu_item">
-                    Progress
-                    <i class="fa-solid fa-bars-progress"></i>
-                </div>
-            </div>
+    <div class="navbar">
+        <div class="logo">
+            MOTION TECH
         </div>
-        <div class="app_container">
-            <div class="row">
-                <div class="title">
-                    Tracking
+        <div id="login" class="nav_action_description">
+            Login
+        </div>
+        <div id="signup" href="./pages/singup.html" class="nav_button">
+            Sign up
+        </div>
+    </div>
+    <div class="main_container">
+        <div class="title">
+            Revolutionazing the fitness industry
+        </div>
+        <div class="description">
+            Use the ultimate software solution designed to optimize your workouts
+        </div>
+        <div class="cards_container">
+            <div class="card">
+                <div class="card_title">
+                    Convenience
+                </div>
+                <div class="card_description">
+                    Forget about hiring a personal trainer
                 </div>
             </div>
-            <div class="row">
-                <div class="subtitle">
-                    AI powered technology to monitor your reps, put yourself in the frame and start checking your form
+            <div class="card">
+                <div class="card_title">
+                    Security
+                </div>
+                <div class="card_description">
+                    Your data is encrypted and we don’t store anything
                 </div>
             </div>
-            <div class="row">
-                <div class="img_container">
-                    <img src="./img/man2.png" alt="Man">
+            <div class="card">
+                <div class="card_title">
+                    Growth
                 </div>
-                <div class="frame_container">
-                    <video id="video" playsinline autoplay class="el-webcam"></video>
-                    <canvas id="skeleton" class="skeleton-webcam"></canvas>
-                    <canvas id="fpscanvas" style="display: none;"></canvas>
+                <div class="card_description">
+                    With our AI model you can smoothly track your workouts
                 </div>
             </div>
-            <div class="row">
-                <div class="col-40">
-                    <div id="start" class="button">
-                        Start
-                    </div>
-                    <div id="restart" class="button">
-                        Restart
-                    </div>
-                </div>
-                <div class="col-60">
-                    <div class="exercise_description">
-                        Reps: <p id="reps">0</p>
-                    </div>
-                </div>
-
-            </div>
-            <select id="exerciseChoose" style="width: 200px;">
-                <option value="biceps">Biceps Curl</option>
-                <option value="squats">Squats</option>
-            </select>
         </div>
     </div>
 </body>
 <script>
-    'use strict';
-
-    var exercise = {
-        ex: 'bicepsCurls', exData:
-            [
-                {
-                    keypoints: [12, 14, 16],
-                    reachValues: [130, 75, 130],
-                    name: 'rightBicep'
-                },
-                {
-                    keypoints: [11, 13, 15],
-                    reachValues: [130, 75, 130],
-                    name: 'leftBicep'
-                }
-            ],
-        exStep: -1,
-        totalSteps: 2
-    };
-
-    async function captureFrame() {
-        /* Get poses and skeleton image */
-        const frameImg = getFpsImage();
-        let poses = await detector.estimatePoses(frameImg);
-        poses = poses[0];
-        drawSkeleton(poses);
-
-        /* return in case exercise does not exist */
-        if (!exercise) return;
-
-        /* Restart steps for the exercise */
-        if (exerciseStep > exercise?.totalSteps) {
-            exercise.exStep = -1;
-            exerciseStep = 0;
-            repCount++;
-            document.getElementById('reps').innerText = repCount;
-            audio.play()
-        }
-
-        /* Process exercises steps, angles etc. */
-        const doneCorrectly = exerciseDetect(poses, exercise);
-        /*
-            exercise?.exStep = 0 ;  exerciseStep= 1 -> detects step 1 [x,1,x]
-            exercise?.exStep = 1 ;  exerciseStep= 2 -> detects step 2 [x,x,2]
-        */
-        if (!(doneCorrectly.includes(false))) {
-            exercise.exStep = exerciseStep;
-            exerciseStep++;
-        }
-
-
-        //return before 5 seconds 
-        if (!startTest) {
-            return;
-        }
-
-    }
-
-    function showAngles(angle, name) {
-        //aqui en un document.getid(id), muestro el id y el anguolo, es dinamico 
-    }
-
-    document.getElementById("start").addEventListener("click", function () {
-        startTest = true;
+    $("#login").on('click',(e)=>{
+        window.location.href = "./pages/signin.html"
     });
-
-    document.getElementById("restart").addEventListener("click", function () {
-            //window.location.reload();
-            exerciseStep = 0;
-            repCount = 0;
-            startTest = false;
-            exercise.exStep = -1;
-            document.getElementById('reps').innerText = 0;
-        });
-
-    document.getElementById("exerciseChoose").addEventListener("change", function (event) {
-        if (document.getElementById('exerciseChoose').value === 'biceps') {
-            exercise = {
-                ex: 'bicepsCurls', exData:
-                    [
-                        {
-                            keypoints: [12, 14, 16],
-                            reachValues: [130, 85, 130],
-                            name: 'Right Bicep'
-                        },
-                        {
-                            keypoints: [11, 13, 15],
-                            reachValues: [130, 85, 130],
-                            name: 'Left Bicep'
-                        }
-                    ],
-                exStep: -1,
-                totalSteps: 2
-            };
-        }
-        else if (document.getElementById('exerciseChoose').value === 'squats') {
-            exercise = {
-                ex: 'squats', exData:
-                    [
-                        {
-                            keypoints: [24, 26, 28],
-                            reachValues: [135, 80, 135],
-                            name: 'Right Leg'
-                        },
-                        {
-                            keypoints: [23, 25, 27],
-                            reachValues: [135, 80, 135],
-                            name: 'Left Leg '
-                        }
-                    ],
-                exStep: -1,
-                totalSteps: 2
-            };
-        }
+    $("#signup").on('click',(e)=>{
+        window.location.href = "./pages/signup.html"
     });
-
-
-
 
 </script>
-<script src="./scripts/IframeMsgs/send.js"></script>
-<script src="./scripts/IframeMsgs/recieve.js"></script>
-<script src="./scripts/poseDetectionJs/model.js"></script>
-<script src="./scripts/poseDetectionJs/loadwebcam.js"></script>
-<script src="./scripts/poseDetectionJs/constantsandvars.js"></script>
-<script src="./scripts/poseDetectionJs/skeletonWebcam.js"></script>
-<script src="./scripts/poseDetectionJs/exerciseDetection.js"></script>
-<script src="./scripts/poseDetectionJs/intervals.js"></script>
-<script src="./scripts/poseDetectionJs/testStatus.js"></script>
 
 </html>

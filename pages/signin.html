@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/app_styles.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>Sign in</title>
+</head>
+
+<body>
+    <div class="navbar">
+        <div id="home" class="logo">
+            MOTION TECH
+        </div>
+        <div class="nav_action_description">
+            ¿Don't have an account?
+        </div>
+        <div id="signup" class="nav_button">
+            Sign up
+        </div>
+    </div>
+    <div id="auth_container" class="main_container">
+        <div class="form_card">
+            <div class="form_card_description">
+                Sign in with your email
+            </div>
+            <div class="label">
+                Email
+            </div>
+            <div class="form_input">
+                <input type="email" name="email" id="email">
+            </div>
+            <div class="label">
+                Password
+            </div>
+            <div class="form_input">
+                <input type="password" name="password" id="password">
+            </div>
+            <div id="signin" class="button primary">
+                Sign in
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    $(document).ready(() => {
+        $("#signup").on('click', (e) => {
+            window.location.href = "./signup.html"
+        });
+
+        $("#home").on('click', (e) => {
+            window.location.href = "../index.html"
+        });
+
+        $("#signin").on('click', (e) => {
+            const params = new URLSearchParams();
+            params.append('email', $("#email").val());
+            params.append('password', $("#password").val());
+            axios.get('http://localhost:8080/user', params)
+                .then(response => {
+                    window.location.href = "./webcam.html"
+                });
+        });
+    });
+
+</script>
+
+</html>
