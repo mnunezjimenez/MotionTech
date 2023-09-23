@@ -1,0 +1,35 @@
+﻿<Properties StartupConfiguration="{4444BE2A-E54E-43B3-86C4-81C6FD7EE681}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="MotionTechAPI/Dockerfile">
+    <Files>
+      <File FileName="MotionTechAPI/Program.cs" Line="40" Column="37" IsPinned="True" />
+      <File FileName="MotionTechAPI/Controllers/UserController.cs" Line="39" Column="20" />
+      <File FileName="MotionTechAPI/Services/MotionTechService.cs" Line="19" Column="15" />
+      <File FileName="MotionTechAPI/Dockerfile" Line="23" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="MotionTechAPI" expanded="True">
+            <Node name="MotionTechAPI">
+              <Node name="Dependencies" expanded="True" />
+              <Node name="Controllers" expanded="True" />
+              <Node name="Data" expanded="True" />
+              <Node name="Models" expanded="True" />
+              <Node name="Properties" expanded="True" />
+              <Node name="Services" expanded="True" />
+              <Node name="Dockerfile" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.docker-compose PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.MotionTechAPI PreferredExecutionTarget="/Applications/Safari.app" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+</Properties>

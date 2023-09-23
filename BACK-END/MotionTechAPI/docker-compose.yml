@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  motiontechapi:
+    image: ${DOCKER_REGISTRY-}motiontechapi
+    build:
+      context: .
+      dockerfile: MotionTechAPI/Dockerfile
